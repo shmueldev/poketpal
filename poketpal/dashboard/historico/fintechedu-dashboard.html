@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FintechEdu - Historial Detallado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8A2BE2',
+                        'dark-bg': '#0D0D0D',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F8F9FA;
+            color: #1F2937;
+            overflow-x: hidden;
+        }
+
+        .hero__sections {
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .hero__major {
+            background: #F8F9FA;
+        }
+
+        .hero__container {
+            display: flex;
+            min-height: 100vh;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            background: #0D0D0D;
+            width: 240px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            position: relative;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sidebar-nav-item.active {
+            background: linear-gradient(to right, rgba(138, 43, 226, 0.5), transparent);
+            color: #FFFFFF;
+            border-left: 3px solid #8A2BE2;
+        }
+
+        .sidebar-nav-item svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            background: #FFFFFF;
+            overflow-y: auto;
+        }
+
+        /* Search and Filters */
+        .search-input {
+            background: #F8F9FA;
+            border: 1px solid #E5E7EB;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #8A2BE2;
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+        }
+
+        /* Table Styling */
+        .transaction-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .transaction-table thead th {
+            background: #F8F9FA;
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6B7280;
+            border-bottom: 1px solid #E5E7EB;
+            position: sticky;
+            top: 0;
+        }
+
+        .transaction-table tbody tr {
+            border-bottom: 1px solid #F3F4F6;
+            transition: all 0.2s ease;
+        }
+
+        .transaction-table tbody tr:hover {
+            background: rgba(138, 43, 226, 0.02);
+            box-shadow: 0 2px 8px rgba(138, 43, 226, 0.08);
+        }
+
+        .transaction-table tbody td {
+            padding: 18px 20px;
+            font-size: 14px;
+        }
+
+        /* Icon Containers */
+        .icon-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        /* Status Badges */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-completed {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .badge-pending {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        /* Widget Cards */
+        .widget-card {
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .widget-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .widget-primary {
+            background: linear-gradient(135deg, #8A2BE2 0%, #6A1BB2 100%);
+            color: white;
+        }
+
+        .widget-secondary {
+            background: white;
+            border: 1px solid #E5E7EB;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8A2BE2, #A855F7);
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        /* Pagination */
+        .pagination-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #E5E7EB;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .pagination-btn:hover {
+            border-color: #8A2BE2;
+            color: #8A2BE2;
+        }
+
+        .pagination-btn.active {
+            background: #8A2BE2;
+            color: white;
+            border-color: #8A2BE2;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -240px;
+                z-index: 50;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .widget-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+
+        /* Scrollbar Styling */
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #F8F9FA;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 4px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF;
+        }
+
+        /* Mobile Overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero__sections hero__major">
+        <div class="hero__container">
+            <!-- Sidebar Overlay (Mobile) -->
+            <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <!-- Logo -->
+                <div class="p-6 border-b border-gray-800">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-lg">Fintech Edu</div>
+                            <div class="text-xs text-gray-400">Premium Account</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="flex-1 py-4">
+                    <a href="#" class="sidebar-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        Gráficas
+                    </a>
+                    <a href="#" class="sidebar-nav-item active">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Historial
+                    </a>
+                    <a href="#" class="sidebar-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        Metas
+                    </a>
+                    <a href="#" class="sidebar-nav-item">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                        </svg>
+                        Bot
+                    </a>
+                </nav>
+
+                <!-- User Info (Bottom) -->
+                <div class="p-4 border-t border-gray-800">
+                    <div class="flex items-center space-x-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%238A2BE2'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='16' font-weight='bold'%3EAR%3C/text%3E%3C/svg%3E" alt="Avatar" class="w-10 h-10 rounded-full">
+                        <div class="flex-1">
+                            <div class="text-white text-sm font-semibold">Alex Rivera</div>
+                            <div class="text-gray-400 text-xs">alex@fintechedu.com</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Mobile Header -->
+                <div class="mobile-menu-toggle bg-white border-b border-gray-200 p-4 flex items-center justify-between lg:hidden">
+                    <button onclick="toggleSidebar()" class="p-2 hover:bg-gray-100 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <div class="font-bold text-lg">Historial</div>
+                    <button class="p-2 hover:bg-gray-100 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Header -->
+                <header class="p-8 pb-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <h1 class="text-3xl font-bold text-gray-900">Historial Detallado</h1>
+                            <p class="text-gray-500 mt-1">Gestiona y visualiza todos tus movimientos financieros educativos.</p>
+                        </div>
+                        <div class="hidden lg:flex items-center space-x-4">
+                            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                </svg>
+                            </button>
+                            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </button>
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%238A2BE2'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='white' font-size='16' font-weight='bold'%3EAR%3C/text%3E%3C/svg%3E" alt="Avatar" class="w-10 h-10 rounded-full">
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Search and Filters -->
+                <div class="p-8 pt-6">
+                    <div class="flex flex-col lg:flex-row gap-4 items-center mb-6 filters-container">
+                        <!-- Search -->
+                        <div class="relative flex-1 w-full">
+                            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input 
+                                type="text" 
+                                placeholder="Buscar por concepto, referencia o ID..."
+                                class="search-input w-full pl-12 pr-4 py-3 rounded-full"
+                            >
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="flex gap-3 w-full lg:w-auto">
+                            <select class="search-input px-4 py-3 rounded-xl flex-1 lg:flex-initial">
+                                <option>Categoría</option>
+                                <option>Educación</option>
+                                <option>Ahorro</option>
+                                <option>Accesorios</option>
+                                <option>Recompensa</option>
+                            </select>
+                            <select class="search-input px-4 py-3 rounded-xl flex-1 lg:flex-initial">
+                                <option>Rango de Fecha</option>
+                                <option>Últimos 7 días</option>
+                                <option>Último mes</option>
+                                <option>Últimos 3 meses</option>
+                            </select>
+                            <select class="search-input px-4 py-3 rounded-xl flex-1 lg:flex-initial">
+                                <option>Tipo</option>
+                                <option>Todos</option>
+                                <option>Ingresos</option>
+                                <option>Gastos</option>
+                            </select>
+                        </div>
+
+                        <!-- Add Button -->
+                        <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors flex items-center gap-2 w-full lg:w-auto justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Agregar
+                        </button>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden fade-in stagger-1">
+                        <div class="overflow-x-auto">
+                            <table class="transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Concepto</th>
+                                        <th>Categoría</th>
+                                        <th>Monto</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Transaction 1 -->
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold text-gray-900">12 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">01:30:56</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="icon-container bg-blue-100">
+                                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold text-gray-900">Curso: Inversiones 101</div>
+                                                    <div class="text-xs text-gray-500">Ref #INV-2023-001</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-sm font-medium text-gray-700">EDUCACIÓN</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-red-600 font-semibold">-$45.00</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-completed">COMPLETADO</span>
+                                        </td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Transaction 2 -->
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold text-gray-900">10 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">14:22:10</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="icon-container bg-green-100">
+                                                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold text-gray-900">Recarga de Saldo</div>
+                                                    <div class="text-xs text-gray-500">Ref #REC-2023-042</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-sm font-medium text-gray-700">DEPÓSITO</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-green-600 font-semibold">+$200.00</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-completed">COMPLETADO</span>
+                                        </td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Transaction 3 -->
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold text-gray-900">08 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">09:15:30</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="icon-container bg-orange-100">
+                                                    <svg class="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold text-gray-900">Meta: Ahorro Master</div>
+                                                    <div class="text-xs text-gray-500">Ref #META-2023-008</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-sm font-medium text-gray-700">ACCESORIOS</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-red-600 font-semibold">-$25.00</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-pending">PENDIENTE</span>
+                                        </td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Transaction 4 -->
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold text-gray-900">05 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">16:45:22</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="icon-container bg-purple-100">
+                                                    <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold text-gray-900">Bono de Bienvenida</div>
+                                                    <div class="text-xs text-gray-500">Ref #BONO-WELCOME</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="text-sm font-medium text-gray-700">RECOMPENSA</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-green-600 font-semibold">+$10.00</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-completed">COMPLETADO</span>
+                                        </td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+                            <div class="text-sm text-gray-600">
+                                Mostrando <span class="font-semibold">1-4</span> de <span class="font-semibold">128</span> resultados
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button class="pagination-btn">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                    </svg>
+                                </button>
+                                <button class="pagination-btn active">1</button>
+                                <button class="pagination-btn">2</button>
+                                <button class="pagination-btn">3</button>
+                                <button class="pagination-btn">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Widget Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 widget-grid">
+                        <!-- Balance Educativo -->
+                        <div class="widget-card widget-primary fade-in stagger-2">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-purple-100 text-sm font-medium">Balance Educativo</div>
+                                <svg class="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold mb-2">$1,240.50</div>
+                            <div class="flex items-center text-purple-100 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                                +12% vs mes anterior
+                            </div>
+                        </div>
+
+                        <!-- Gastos en Cursos -->
+                        <div class="widget-card widget-secondary fade-in stagger-3">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-gray-600 text-sm font-medium">Gastos en Cursos</div>
+                                <svg class="w-8 h-8 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">$345.00</div>
+                            <div class="flex items-center text-gray-600 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Este mes
+                            </div>
+                        </div>
+
+                        <!-- Metas Alcanzadas -->
+                        <div class="widget-card widget-secondary fade-in stagger-3">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-gray-600 text-sm font-medium">Metas Alcanzadas</div>
+                                <svg class="w-8 h-8 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-gray-900 mb-3">8/10</div>
+                            <div class="progress-bar mb-2">
+                                <div class="progress-fill" style="width: 80%"></div>
+                            </div>
+                            <div class="text-gray-600 text-sm">
+                                ¡80% de tus objetivos cumplidos!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // Close sidebar when clicking outside (mobile)
+        document.getElementById('sidebarOverlay').addEventListener('click', function() {
+            toggleSidebar();
+        });
+    </script>
+</body>
+</html>

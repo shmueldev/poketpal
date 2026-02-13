@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FintechEdu - Dashboard Completo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8A2BE2',
+                        'dark-bg': '#0D0D0D',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0D0D0D;
+            color: #FFFFFF;
+            overflow: hidden;
+        }
+
+        .hero__sections {
+            min-height: 100vh;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .hero__major {
+            background: #0D0D0D;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #0D0D0D;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            margin: 4px 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .sidebar-nav-item:hover {
+            background: rgba(138, 43, 226, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .sidebar-nav-item.active {
+            background: linear-gradient(135deg, #8A2BE2 0%, #6A1BB2 100%);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
+        }
+
+        .sidebar-nav-item svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+
+        /* Main Content */
+        .hero__container {
+            flex: 1;
+            overflow-y: auto;
+            background: #F9FAFB;
+        }
+
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 140px;
+            height: 140px;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress-bg {
+            fill: none;
+            stroke: rgba(138, 43, 226, 0.15);
+            stroke-width: 12;
+        }
+
+        .circular-progress-bar {
+            fill: none;
+            stroke: #8A2BE2;
+            stroke-width: 12;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .circular-progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 12px;
+            background: rgba(138, 43, 226, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8A2BE2, #A855F7);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Transaction Table */
+        .transaction-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .transaction-table thead th {
+            background: #F8F9FA;
+            padding: 14px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6B7280;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .transaction-table tbody tr {
+            border-bottom: 1px solid #F3F4F6;
+            transition: all 0.2s ease;
+        }
+
+        .transaction-table tbody tr:hover {
+            background: rgba(138, 43, 226, 0.02);
+        }
+
+        .transaction-table tbody td {
+            padding: 18px 20px;
+            font-size: 14px;
+            color: #1F2937;
+        }
+
+        /* Badges */
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-completed {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        .badge-pending {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: forwards; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .hero__container {
+                width: 100%;
+            }
+        }
+
+        /* Scrollbar */
+        .hero__container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .hero__container::-webkit-scrollbar-track {
+            background: #F8F9FA;
+        }
+
+        .hero__container::-webkit-scrollbar-thumb {
+            background: #D1D5DB;
+            border-radius: 4px;
+        }
+
+        /* Card Hover Effects */
+        .goal-card {
+            transition: all 0.3s ease;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.2);
+        }
+
+        /* Input Styles */
+        .search-input {
+            background: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            transition: all 0.2s ease;
+            color: #1F2937;
+        }
+
+        .search-input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #8A2BE2;
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <section class="hero__sections hero__major flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-white font-bold text-lg">Fintech Edu</div>
+                        <div class="text-xs text-gray-400">Premium</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 py-6">
+                <div class="sidebar-nav-item active" onclick="showView('historial')" id="nav-historial">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    Historial
+                </div>
+                <div class="sidebar-nav-item" onclick="showView('metas')" id="nav-metas">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                    Metas
+                </div>
+                <div class="sidebar-nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Gráficas
+                </div>
+                <div class="sidebar-nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                    </svg>
+                    Bot
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Container -->
+        <main class="hero__container flex-1 overflow-y-auto bg-[#F9FAFB]">
+            <!-- HISTORIAL VIEW -->
+            <section id="view-historial" class="min-h-full">
+                <!-- Header -->
+                <header class="bg-white p-8 pb-6 border-b border-gray-200">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-1">Historial Detallado</h1>
+                    <p class="text-gray-500">Gestiona y visualiza todos tus movimientos financieros educativos.</p>
+                </header>
+
+                <!-- Search and Filters -->
+                <div class="p-8 pt-6">
+                    <div class="flex flex-col lg:flex-row gap-4 items-center mb-6">
+                        <div class="relative flex-1 w-full">
+                            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="text" placeholder="Buscar por concepto, referencia o ID..." class="search-input w-full pl-12 pr-4 py-3 rounded-full">
+                        </div>
+
+                        <div class="flex gap-3 w-full lg:w-auto">
+                            <select class="search-input px-4 py-3 rounded-xl flex-1 lg:flex-initial">
+                                <option>Categoría</option>
+                                <option>Educación</option>
+                                <option>Ahorro</option>
+                            </select>
+                            <select class="search-input px-4 py-3 rounded-xl flex-1 lg:flex-initial">
+                                <option>Rango de Fecha</option>
+                                <option>Últimos 7 días</option>
+                            </select>
+                            <select class="search-input px-4 py-3 rounded-xl flex-1 lg:flex-initial">
+                                <option>Tipo</option>
+                                <option>Todos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden mb-8 fade-in stagger-1">
+                        <div class="overflow-x-auto">
+                            <table class="transaction-table">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Concepto</th>
+                                        <th>Categoría</th>
+                                        <th>Monto</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold">12 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">01:30:56</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold">Curso: Inversiones 101</div>
+                                                    <div class="text-xs text-gray-500">Ref #INV-2023-001</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="text-sm font-medium">EDUCACIÓN</span></td>
+                                        <td><span class="text-red-600 font-semibold">-$45.00</span></td>
+                                        <td><span class="badge badge-completed">COMPLETADO</span></td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg">
+                                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold">10 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">14:22:10</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold">Recarga de Saldo</div>
+                                                    <div class="text-xs text-gray-500">Ref #REC-2023-042</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="text-sm font-medium">DEPÓSITO</span></td>
+                                        <td><span class="text-green-600 font-semibold">+$200.00</span></td>
+                                        <td><span class="badge badge-completed">COMPLETADO</span></td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg">
+                                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold">08 Oct. 2023</div>
+                                            <div class="text-xs text-gray-500">09:15:30</div>
+                                        </td>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                                                    <svg class="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <div class="font-semibold">Meta: Ahorro Master</div>
+                                                    <div class="text-xs text-gray-500">Ref #META-2023-008</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><span class="text-sm font-medium">ACCESORIOS</span></td>
+                                        <td><span class="text-red-600 font-semibold">-$25.00</span></td>
+                                        <td><span class="badge badge-pending">PENDIENTE</span></td>
+                                        <td>
+                                            <button class="p-2 hover:bg-gray-100 rounded-lg">
+                                                <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Widget Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gradient-to-br from-purple-600 to-purple-700 rounded-xl p-6 text-white fade-in stagger-2">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-purple-100 text-sm font-medium">Balance Educativo</div>
+                                <svg class="w-8 h-8 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold mb-2">$1,240.50</div>
+                            <div class="flex items-center text-purple-100 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                </svg>
+                                +12% vs mes anterior
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-6 border border-gray-200 fade-in stagger-3">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-gray-600 text-sm font-medium">Gastos en Cursos</div>
+                                <svg class="w-8 h-8 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">$345.00</div>
+                            <div class="text-gray-600 text-sm">Este mes</div>
+                        </div>
+
+                        <div class="bg-white rounded-xl p-6 border border-gray-200 fade-in stagger-4">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="text-gray-600 text-sm font-medium">Metas Alcanzadas</div>
+                                <svg class="w-8 h-8 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-gray-900 mb-3">8/10</div>
+                            <div class="progress-bar mb-2">
+                                <div class="progress-fill" style="width: 80%"></div>
+                            </div>
+                            <div class="text-gray-600 text-sm">80% completado</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- METAS VIEW -->
+            <section id="view-metas" class="hidden min-h-full bg-[#0D0D0D]">
+                <!-- Header -->
+                <header class="p-8 pb-6 border-b border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold text-white mb-1">Metas Financieras</h1>
+                            <p class="text-gray-400">Visualiza y gestiona tus objetivos de ahorro para el 2024.</p>
+                        </div>
+                        <button class="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:shadow-lg hover:shadow-purple-500/50 transition-all">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Nueva Meta
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Content -->
+                <div class="p-8">
+                    <!-- Individual Goals -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <!-- Goal 1 -->
+                        <div class="goal-card bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 fade-in stagger-1">
+                            <div class="flex flex-col items-center">
+                                <div class="circular-progress mb-4">
+                                    <svg width="140" height="140">
+                                        <circle class="circular-progress-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="circular-progress-bar" cx="70" cy="70" r="60" 
+                                                stroke-dasharray="377" 
+                                                stroke-dashoffset="94.25"/>
+                                    </svg>
+                                    <div class="circular-progress-text">75%</div>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-1">Fondo de Emergencia</h3>
+                                <p class="text-sm text-gray-400 mb-3">Meta: $5,000.00</p>
+                                <div class="flex items-center justify-between w-full px-2">
+                                    <span class="text-xs text-gray-500">Ahorrado</span>
+                                    <span class="text-sm font-bold text-purple-400">$3,750</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Goal 2 -->
+                        <div class="goal-card bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 fade-in stagger-2">
+                            <div class="flex flex-col items-center">
+                                <div class="circular-progress mb-4">
+                                    <svg width="140" height="140">
+                                        <circle class="circular-progress-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="circular-progress-bar" cx="70" cy="70" r="60" 
+                                                stroke-dasharray="377" 
+                                                stroke-dashoffset="226.2"/>
+                                    </svg>
+                                    <div class="circular-progress-text">40%</div>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-1">Viaje a Japón</h3>
+                                <p class="text-sm text-gray-400 mb-3">Meta: $2,000.00</p>
+                                <div class="flex items-center justify-between w-full px-2">
+                                    <span class="text-xs text-gray-500">Ahorrado</span>
+                                    <span class="text-sm font-bold text-purple-400">$4,800</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Goal 3 -->
+                        <div class="goal-card bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700 fade-in stagger-3">
+                            <div class="flex flex-col items-center">
+                                <div class="circular-progress mb-4">
+                                    <svg width="140" height="140">
+                                        <circle class="circular-progress-bg" cx="70" cy="70" r="60"/>
+                                        <circle class="circular-progress-bar" cx="70" cy="70" r="60" 
+                                                stroke-dasharray="377" 
+                                                stroke-dashoffset="320.45"/>
+                                    </svg>
+                                    <div class="circular-progress-text">15%</div>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-1">Inversión 2024</h3>
+                                <p class="text-sm text-gray-400 mb-3">Meta: $80,000.00</p>
+                                <div class="flex items-center justify-between w-full px-2">
+                                    <span class="text-xs text-gray-500">Ahorrado</span>
+                                    <span class="text-sm font-bold text-purple-400">$7,500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Global Savings Goal -->
+                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 border border-gray-700 mb-8 fade-in stagger-4">
+                        <div class="flex items-start justify-between mb-6">
+                            <div>
+                                <h2 class="text-2xl font-bold text-white mb-2">Meta Global de Ahorro</h2>
+                                <p class="text-gray-400">Progreso acumulado de todos tus objetivos activos</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-5xl font-bold text-white mb-2">62%</div>
+                                <div class="text-sm text-gray-400">En Progreso</div>
+                            </div>
+                        </div>
+                        <div class="progress-bar mb-4" style="height: 16px;">
+                            <div class="progress-fill" style="width: 62%"></div>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <div>
+                                <span class="text-purple-400 font-bold text-lg">Actual: $32,400.00</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400">Objetivo Total: </span>
+                                <span class="text-white font-bold">$52,000.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Info Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-gray-400 text-sm">Ahorro mensual promedio</div>
+                                    <div class="text-2xl font-bold text-white">$2,400.00</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 border border-gray-700">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mr-4">
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-gray-400 text-sm">Estimado finalización global</div>
+                                    <div class="text-2xl font-bold text-white">Octubre 2024</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <script>
+        function showView(viewName) {
+            // Hide all views
+            document.getElementById('view-historial').classList.add('hidden');
+            document.getElementById('view-metas').classList.add('hidden');
+
+            // Show selected view
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+
+            // Update nav active state
+            document.getElementById('nav-historial').classList.remove('active');
+            document.getElementById('nav-metas').classList.remove('active');
+            document.getElementById('nav-' + viewName).classList.add('active');
+        }
+
+        // Initialize animations on load
+        window.addEventListener('load', function() {
+            // Trigger progress animations
+            setTimeout(() => {
+                document.querySelectorAll('.progress-fill').forEach(el => {
+                    const width = el.style.width;
+                    el.style.width = '0%';
+                    setTimeout(() => {
+                        el.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!-- <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FintechEdu - Login</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <section class="hero__sections hero__major">
+        <div class="hero__container">
+            <div class="hero__left">
+                <div class="hero__card">
+                    <div class="hero__icon">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="35" width="12" height="25" fill="white" rx="2"/>
+                            <rect x="34" y="25" width="12" height="35" fill="white" rx="2"/>
+                            <rect x="48" y="15" width="12" height="45" fill="white" rx="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="hero__content">
+                    <h1 class="hero__title">Domina tus Finanzas</h1>
+                    <p class="hero__description">La educación financiera del futuro, impulsada por tecnología de vanguardia.</p>
+                </div>
+            </div>
+
+            <div class="hero__right">
+                <div class="hero__form-card">
+                    <div class="hero__logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="14" width="5" height="10" fill="#8A2BE2" rx="1"/>
+                            <rect x="13.5" y="10" width="5" height="14" fill="#8A2BE2" rx="1"/>
+                            <rect x="19" y="6" width="5" height="18" fill="#8A2BE2" rx="1"/>
+                        </svg>
+                        <span class="hero__logo-text">FintechEdu</span>
+                    </div>
+
+                    <div class="hero__form-header">
+                        <h2 class="hero__form-title">Bienvenido de nuevo</h2>
+                        <p class="hero__form-subtitle">Inicia sesión para acceder a tu panel educativo.</p>
+                    </div>
+
+                    <form class="hero__form">
+                        <div class="hero__input-group">
+                            <label class="hero__label" for="email">Correo electrónico</label>
+                            <div class="hero__input-wrapper">
+                                <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M2 5l8 6 8-6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                                <input type="email" id="email" class="hero__input" placeholder="ejemplo@fintechedu.com">
+                            </div>
+                        </div>
+
+                        <div class="hero__input-group">
+                            <label class="hero__label" for="password">Contraseña</label>
+                            <div class="hero__input-wrapper">
+                                <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="4" y="9" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M7 9V6a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                                <input type="password" id="password" class="hero__input" placeholder="••••••••">
+                                <button type="button" class="hero__toggle-password">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="currentColor"/>
+                                        <path d="M10 4C5 4 2 10 2 10s3 6 8 6 8-6 8-6-3-6-8-6z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="hero__form-options">
+                            <label class="hero__checkbox">
+                                <input type="checkbox">
+                                <span class="hero__checkbox-text">Recordarme</span>
+                            </label>
+                            <a href="#" class="hero__link">¿Olvidaste tu contraseña?</a>
+                        </div>
+
+                        <button type="submit" class="hero__button">
+                            Iniciar sesión
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+
+                        <div class="hero__register">
+                            <span class="hero__register-text">¿No tienes una cuenta?</span>
+                            <a href="#" class="hero__link">Regístrate ahora</a>
+                        </div>
+
+                        <div class="hero__social">
+                            <button type="button" class="hero__social-button">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.2 10.2c0-1-.1-1.8-.2-2.6H10v4.9h4.6c-.2 1.1-.8 2-1.7 2.7v2.2h2.7c1.6-1.5 2.6-3.7 2.6-6.2z" fill="#4285F4"/>
+                                    <path d="M10 18.5c2.4 0 4.5-.8 6-2.2l-2.7-2.2c-.8.5-1.8.8-3 .8-2.3 0-4.3-1.6-5-3.7H2.5v2.3c1.5 3 4.5 5 7.5 5z" fill="#34A853"/>
+                                    <path d="M5 11.2c-.2-.5-.3-1.1-.3-1.7s.1-1.2.3-1.7V5.5H2.5C1.8 6.9 1.5 8.4 1.5 10s.3 3.1 1 4.5l2.5-2.3z" fill="#FBBC05"/>
+                                    <path d="M10 4.3c1.3 0 2.5.4 3.4 1.3l2.5-2.5C14.4 1.7 12.3 1 10 1 6.5 1 3.5 3 2 6l2.5 2.3c.7-2.1 2.7-3.7 5-3.7z" fill="#EA4335"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="hero__social-button">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 2c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8z" fill="#000"/>
+                                    <path d="M13.5 8.5c.3-.5.5-1 .5-1.5 0-1.7-1.3-3-3-3-.8 0-1.6.3-2.1.9-.5-.2-1-.3-1.4-.3-2.5 0-4.5 2-4.5 4.5 0 2.5 2 4.5 4.5 4.5.5 0 .9-.1 1.4-.2.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3 0-.6-.2-1.1-.4-1.6z" fill="#FFF"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="hero__footer">
+                        <p>© 2024 FintechEdu. Todos los derechos reservados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FintechEdu - Login</title>
+    <link rel="stylesheet" href="./login.css">
+</head>
+<body>
+    <section class="hero__sections hero__major">
+        <div class="hero__container">
+            <div class="hero__toggle">
+                <button class="hero__toggle-btn hero__toggle-btn--active" data-mode="login">Iniciar sesión</button>
+                <button class="hero__toggle-btn" data-mode="register">Registrarse</button>
+                <div class="hero__toggle-slider"></div>
+            </div>
+
+            <div class="hero__wrapper">
+                <div class="hero__panel hero__left" id="leftPanel">
+                    <div class="hero__card">
+                        <div class="hero__icon">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="20" y="35" width="12" height="25" fill="white" rx="2"/>
+                                <rect x="34" y="25" width="12" height="35" fill="white" rx="2"/>
+                                <rect x="48" y="15" width="12" height="45" fill="white" rx="2"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="hero__content">
+                        <h1 class="hero__title">Domina tus Finanzas</h1>
+                        <p class="hero__description">La educación financiera del futuro, impulsada por tecnología de vanguardia.</p>
+                    </div>
+                </div>
+
+                <div class="hero__panel hero__right" id="rightPanel">
+                    <div class="hero__form-card">
+                        <div class="hero__logo">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="8" y="14" width="5" height="10" fill="#8A2BE2" rx="1"/>
+                                <rect x="13.5" y="10" width="5" height="14" fill="#8A2BE2" rx="1"/>
+                                <rect x="19" y="6" width="5" height="18" fill="#8A2BE2" rx="1"/>
+                            </svg>
+                            <span class="hero__logo-text">FintechEdu</span>
+                        </div>
+
+                        <div class="hero__forms">
+                            <div class="hero__form-wrapper hero__form-wrapper--active" id="loginForm">
+                                <div class="hero__form-header">
+                                    <h2 class="hero__form-title">Bienvenido de nuevo</h2>
+                                    <p class="hero__form-subtitle">Inicia sesión para acceder a tu panel educativo.</p>
+                                </div>
+
+                                <form class="hero__form">
+                                    <div class="hero__input-group">
+                                        <label class="hero__label" for="login-email">Correo electrónico</label>
+                                        <div class="hero__input-wrapper">
+                                            <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                <path d="M2 5l8 6 8-6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            </svg>
+                                            <input type="email" id="login-email" class="hero__input" placeholder="ejemplo@fintechedu.com">
+                                        </div>
+                                    </div>
+
+                                    <div class="hero__input-group">
+                                        <label class="hero__label" for="login-password">Contraseña</label>
+                                        <div class="hero__input-wrapper">
+                                            <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="4" y="9" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                <path d="M7 9V6a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            </svg>
+                                            <input type="password" id="login-password" class="hero__input" placeholder="••••••••">
+                                            <button type="button" class="hero__toggle-password">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="currentColor"/>
+                                                    <path d="M10 4C5 4 2 10 2 10s3 6 8 6 8-6 8-6-3-6-8-6z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="hero__form-options">
+                                        <label class="hero__checkbox">
+                                            <input type="checkbox">
+                                            <span class="hero__checkbox-text">Recordarme</span>
+                                        </label>
+                                        <a href="#" class="hero__link">¿Olvidaste tu contraseña?</a>
+                                    </div>
+
+                                    <button type="submit" class="hero__button">
+                                        Iniciar sesión
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
+
+                                    <div class="hero__social">
+                                        <button type="button" class="hero__social-button">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M18.2 10.2c0-1-.1-1.8-.2-2.6H10v4.9h4.6c-.2 1.1-.8 2-1.7 2.7v2.2h2.7c1.6-1.5 2.6-3.7 2.6-6.2z" fill="#4285F4"/>
+                                                <path d="M10 18.5c2.4 0 4.5-.8 6-2.2l-2.7-2.2c-.8.5-1.8.8-3 .8-2.3 0-4.3-1.6-5-3.7H2.5v2.3c1.5 3 4.5 5 7.5 5z" fill="#34A853"/>
+                                                <path d="M5 11.2c-.2-.5-.3-1.1-.3-1.7s.1-1.2.3-1.7V5.5H2.5C1.8 6.9 1.5 8.4 1.5 10s.3 3.1 1 4.5l2.5-2.3z" fill="#FBBC05"/>
+                                                <path d="M10 4.3c1.3 0 2.5.4 3.4 1.3l2.5-2.5C14.4 1.7 12.3 1 10 1 6.5 1 3.5 3 2 6l2.5 2.3c.7-2.1 2.7-3.7 5-3.7z" fill="#EA4335"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="hero__social-button">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 2c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8z" fill="#000"/>
+                                                <path d="M13.5 8.5c.3-.5.5-1 .5-1.5 0-1.7-1.3-3-3-3-.8 0-1.6.3-2.1.9-.5-.2-1-.3-1.4-.3-2.5 0-4.5 2-4.5 4.5 0 2.5 2 4.5 4.5 4.5.5 0 .9-.1 1.4-.2.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3 0-.6-.2-1.1-.4-1.6z" fill="#FFF"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="hero__form-wrapper" id="registerForm">
+                                <div class="hero__form-header">
+                                    <h2 class="hero__form-title">Crear una cuenta</h2>
+                                    <p class="hero__form-subtitle">Únete a nuestra plataforma educativa financiera.</p>
+                                </div>
+
+                                <form class="hero__form">
+                                    <div class="hero__input-group">
+                                        <label class="hero__label" for="register-name">Nombre completo</label>
+                                        <div class="hero__input-wrapper">
+                                            <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                <path d="M3 18c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            </svg>
+                                            <input type="text" id="register-name" class="hero__input" placeholder="Tu nombre completo">
+                                        </div>
+                                    </div>
+
+                                    <div class="hero__input-group">
+                                        <label class="hero__label" for="register-email">Correo electrónico</label>
+                                        <div class="hero__input-wrapper">
+                                            <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                <path d="M2 5l8 6 8-6" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            </svg>
+                                            <input type="email" id="register-email" class="hero__input" placeholder="ejemplo@fintechedu.com">
+                                        </div>
+                                    </div>
+
+                                    <div class="hero__input-group">
+                                        <label class="hero__label" for="register-password">Contraseña</label>
+                                        <div class="hero__input-wrapper">
+                                            <svg class="hero__input-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="4" y="9" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                <path d="M7 9V6a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            </svg>
+                                            <input type="password" id="register-password" class="hero__input" placeholder="Mínimo 8 caracteres">
+                                            <button type="button" class="hero__toggle-password">
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M10 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" fill="currentColor"/>
+                                                    <path d="M10 4C5 4 2 10 2 10s3 6 8 6 8-6 8-6-3-6-8-6z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="hero__form-options">
+                                        <label class="hero__checkbox">
+                                            <input type="checkbox">
+                                            <span class="hero__checkbox-text">Acepto los términos y condiciones</span>
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="hero__button">
+                                        Crear cuenta
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
+
+                                    <div class="hero__social">
+                                        <button type="button" class="hero__social-button">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M18.2 10.2c0-1-.1-1.8-.2-2.6H10v4.9h4.6c-.2 1.1-.8 2-1.7 2.7v2.2h2.7c1.6-1.5 2.6-3.7 2.6-6.2z" fill="#4285F4"/>
+                                                <path d="M10 18.5c2.4 0 4.5-.8 6-2.2l-2.7-2.2c-.8.5-1.8.8-3 .8-2.3 0-4.3-1.6-5-3.7H2.5v2.3c1.5 3 4.5 5 7.5 5z" fill="#34A853"/>
+                                                <path d="M5 11.2c-.2-.5-.3-1.1-.3-1.7s.1-1.2.3-1.7V5.5H2.5C1.8 6.9 1.5 8.4 1.5 10s.3 3.1 1 4.5l2.5-2.3z" fill="#FBBC05"/>
+                                                <path d="M10 4.3c1.3 0 2.5.4 3.4 1.3l2.5-2.5C14.4 1.7 12.3 1 10 1 6.5 1 3.5 3 2 6l2.5 2.3c.7-2.1 2.7-3.7 5-3.7z" fill="#EA4335"/>
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="hero__social-button">
+                                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10 2c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8z" fill="#000"/>
+                                                <path d="M13.5 8.5c.3-.5.5-1 .5-1.5 0-1.7-1.3-3-3-3-.8 0-1.6.3-2.1.9-.5-.2-1-.3-1.4-.3-2.5 0-4.5 2-4.5 4.5 0 2.5 2 4.5 4.5 4.5.5 0 .9-.1 1.4-.2.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3 0-.6-.2-1.1-.4-1.6z" fill="#FFF"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="hero__footer">
+                            <p>© 2024 FintechEdu. Todos los derechos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./script.js"></script>
+</body>
+</html>
