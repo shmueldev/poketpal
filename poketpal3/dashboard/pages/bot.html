@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#9213ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#1a1022",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <title>Dashboard - FinanzaBot</title>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Top Navigation Bar -->
+            <header
+                class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-10 py-3 bg-white dark:bg-slate-950">
+                <div class="flex items-center gap-8">
+                    <div class="flex items-center gap-4 text-primary">
+                        <div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg">
+                            <span class="material-symbols-outlined">account_balance</span>
+                        </div>
+                        <h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-tight">
+                            FintechEdu</h2>
+                    </div>
+                    <label class="flex flex-col min-w-40 h-10 max-w-64 hidden md:block">
+                        <div
+                            class="flex w-full flex-1 items-stretch rounded-xl h-full bg-slate-100 dark:bg-slate-900 px-3">
+                            <div class="text-slate-500 flex items-center justify-center pr-2">
+                                <span class="material-symbols-outlined text-[20px]">search</span>
+                            </div>
+                            <input
+                                class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:outline-0 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-500 text-sm"
+                                placeholder="Buscar mercado..." value="" />
+                        </div>
+                    </label>
+                </div>
+                <div class="flex flex-1 justify-end gap-8 items-center">
+                    <nav class="hidden lg:flex items-center gap-8">
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors"
+                            href="#">Dashboard</a>
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors"
+                            href="#">Inversiones</a>
+                        <a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">FinanzaBot</a>
+                        <a class="text-slate-600 dark:text-slate-300 text-sm font-semibold hover:text-primary transition-colors"
+                            href="#">Comunidad</a>
+                    </nav>
+                    <div class="flex gap-3">
+                        <button
+                            class="flex items-center justify-center rounded-xl size-10 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                            <span class="material-symbols-outlined">notifications</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center rounded-xl size-10 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                            <span class="material-symbols-outlined">settings</span>
+                        </button>
+                    </div>
+                    <div
+                        class="bg-primary/20 rounded-full size-10 border-2 border-primary/50 flex items-center justify-center overflow-hidden">
+                        <img class="w-full h-full object-cover" data-alt="Profile picture of a professional user"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpvnw1aPe2k6qQySshkzZ_OSsC-z-WLub9A227tcmCB8oDE0ri6GLzKxlneOH-RKgVtUWbN_vS9HpdCk8ZnFNr-sDJNiDW37AEECZBqCVCdff_mmfVWtIZPeUtTV2aRJpTzuRpjTaR7g8chNWX7NyI9JT1_pZalRtQUllvaHU75tnA6KJKTK5g9AwJPIgX1Y8ESDD3xKShg3IZhoLKihu_FanXcyY0xLsj7cRTCKt5MrM-qr2V7NEcrK8xwbyvzmPPu_G0esF1hHU" />
+                    </div>
+                </div>
+            </header>
+            <!-- Main Content Area -->
+            <main class="flex-1 flex overflow-hidden">
+                <!-- Inner Layout for Bot Section -->
+                <div class="flex-1 flex flex-col max-w-[1400px] mx-auto w-full px-4 md:px-10 py-6 gap-6">
+                    <!-- Breadcrumbs -->
+                    <div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                        <span class="material-symbols-outlined text-sm">home</span>
+                        <span>Dashboard</span>
+                        <span class="material-symbols-outlined text-xs">chevron_right</span>
+                        <span class="text-primary font-medium">FinanzaBot</span>
+                    </div>
+                    <!-- Bot Main Interface -->
+                    <div
+                        class="flex-1 flex flex-col md:flex-row gap-6 bg-white dark:bg-slate-950 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden min-h-[600px]">
+                        <!-- Left Sidebar (within interface) -->
+                        <aside
+                            class="w-full md:w-80 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-slate-50/50 dark:bg-slate-900/30">
+                            <div class="p-6">
+                                <h3
+                                    class="text-slate-900 dark:text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary">history</span>
+                                    Recientes
+                                </h3>
+                                <div class="space-y-3">
+                                    <div class="p-3 rounded-lg bg-primary/10 border border-primary/20 cursor-pointer">
+                                        <p class="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">
+                                            Análisis de ahorro mensual</p>
+                                        <p class="text-xs text-slate-500 mt-1">Hace 2 horas</p>
+                                    </div>
+                                    <div
+                                        class="p-3 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer transition-colors border border-transparent">
+                                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400 truncate">¿Cómo
+                                            invertir 500€?</p>
+                                        <p class="text-xs text-slate-500 mt-1">Ayer, 14:20</p>
+                                    </div>
+                                    <div
+                                        class="p-3 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 cursor-pointer transition-colors border border-transparent">
+                                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400 truncate">
+                                            Diferencia ETF vs Fondos</p>
+                                        <p class="text-xs text-slate-500 mt-1">Lunes, 09:15</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 mt-auto border-t border-slate-200 dark:border-slate-800">
+                                <h3
+                                    class="text-slate-900 dark:text-white font-bold text-lg mb-4 flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-yellow-500">lightbulb</span>
+                                    Tips Financieros
+                                </h3>
+                                <div class="bg-primary/5 rounded-xl p-4 border border-primary/10">
+                                    <p class="text-xs text-primary font-bold uppercase tracking-wider mb-2">Consejo del
+                                        día</p>
+                                    <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                        "Automatiza un 10% de tus ingresos a tu cuenta de ahorros apenas recibas tu
+                                        salario."
+                                    </p>
+                                </div>
+                            </div>
+                        </aside>
+                        <!-- Central Chat Area -->
+                        <div class="flex-1 flex flex-col h-full bg-white dark:bg-slate-950 relative">
+                            <!-- Chat Header -->
+                            <div
+                                class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="size-10 rounded-full bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+                                        <span class="material-symbols-outlined">smart_toy</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 dark:text-white">FinanzaBot</h4>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="size-2 rounded-full bg-green-500"></span>
+                                            <span class="text-xs text-slate-500">En línea • Tu asistente IA</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                                    <span class="material-symbols-outlined">more_vert</span>
+                                </button>
+                            </div>
+                            <!-- Chat Messages Scroll -->
+                            <div class="flex-1 overflow-y-auto p-6 space-y-6 flex flex-col">
+                                <!-- Bot Message -->
+                                <div class="flex items-start gap-3 max-w-[80%]">
+                                    <div
+                                        class="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-1">
+                                        <span class="material-symbols-outlined text-sm">smart_toy</span>
+                                    </div>
+                                    <div
+                                        class="bg-primary/10 dark:bg-primary/20 text-slate-800 dark:text-slate-100 p-4 rounded-2xl rounded-tl-none">
+                                        <p class="text-sm leading-relaxed">¡Hola de nuevo! Soy FinanzaBot, tu mentor
+                                            financiero. ¿En qué puedo ayudarte hoy a mejorar tus finanzas?</p>
+                                    </div>
+                                </div>
+                                <!-- User Message -->
+                                <div class="flex items-start gap-3 max-w-[80%] self-end flex-row-reverse">
+                                    <div
+                                        class="size-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center flex-shrink-0 mt-1 overflow-hidden">
+                                        <img class="w-full h-full object-cover"
+                                            data-alt="Small profile avatar for chat bubble"
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp1Er1RAWCWGnayH8dm4e1Oc8HM75nDQTTvE3dtJcreTCMknkZhuc14Z6me_ByPZbSRpRQMUoix2QNcfPlNIIgnJZ-GEFGMC_Only1rUCj6zK-coe-LijNF6roEAx3op06f6vwHzalf9wdBkFeFWJR1eeIM0HNoqahicVoSaxw4jwmA41imSa66559MiF6KDZSg7qBIZMfPyenoBGKeVh4W7LrWa_6FYypnV5V6ZVXDMg57tEeNTevMiOJpzMbtBFb_4Z2zZayaUE" />
+                                    </div>
+                                    <div class="bg-primary text-white p-4 rounded-2xl rounded-tr-none shadow-md">
+                                        <p class="text-sm leading-relaxed">Hola Bot, ¿podrías darme un resumen de mis
+                                            gastos de este mes?</p>
+                                    </div>
+                                </div>
+                                <!-- Bot Message with Data -->
+                                <div class="flex items-start gap-3 max-w-[85%]">
+                                    <div
+                                        class="size-8 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-1">
+                                        <span class="material-symbols-outlined text-sm">smart_toy</span>
+                                    </div>
+                                    <div
+                                        class="bg-primary/10 dark:bg-primary/20 text-slate-800 dark:text-slate-100 p-4 rounded-2xl rounded-tl-none space-y-3">
+                                        <p class="text-sm leading-relaxed">Claro que sí. Hasta hoy, has gastado un total
+                                            de **1,240.50€**. Aquí tienes el desglose:</p>
+                                        <div class="space-y-2 py-2">
+                                            <div class="flex justify-between text-xs">
+                                                <span>Alimentación</span>
+                                                <span class="font-bold">420.00€</span>
+                                            </div>
+                                            <div
+                                                class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                                <div class="bg-primary h-full w-[45%]"></div>
+                                            </div>
+                                            <div class="flex justify-between text-xs">
+                                                <span>Vivienda</span>
+                                                <span class="font-bold">650.00€</span>
+                                            </div>
+                                            <div
+                                                class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                                                <div class="bg-primary h-full w-[80%]"></div>
+                                            </div>
+                                        </div>
+                                        <p class="text-xs italic opacity-70">¡Vas por buen camino, estás un 12% por
+                                            debajo de tu presupuesto habitual!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Footer Section -->
+                            <div class="p-6 pt-0">
+                                <!-- Quick Actions Horizontal Scroll -->
+                                <div class="flex items-center gap-2 overflow-x-auto pb-4 no-scrollbar">
+                                    <button
+                                        class="whitespace-nowrap px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                                        ¿Cuánto gasté este mes?
+                                    </button>
+                                    <button
+                                        class="whitespace-nowrap px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                                        Mi meta de ahorro
+                                    </button>
+                                    <button
+                                        class="whitespace-nowrap px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                                        Comparar con mes pasado
+                                    </button>
+                                    <button
+                                        class="whitespace-nowrap px-4 py-2 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold hover:bg-primary hover:text-white transition-all">
+                                        Consejos de inversión
+                                    </button>
+                                </div>
+                                <!-- Input Bar -->
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex-1 flex items-center bg-slate-100 dark:bg-slate-900 rounded-2xl px-4 py-1.5 border border-transparent focus-within:border-primary/50 transition-all">
+                                        <button class="text-slate-400 hover:text-primary transition-colors mr-2">
+                                            <span class="material-symbols-outlined">attach_file</span>
+                                        </button>
+                                        <input
+                                            class="flex-1 bg-transparent border-none focus:ring-0 text-slate-800 dark:text-slate-100 text-sm py-2"
+                                            placeholder="Escribe tu consulta financiera..." type="text" />
+                                        <button class="text-slate-400 hover:text-primary transition-colors ml-2">
+                                            <span class="material-symbols-outlined">sentiment_satisfied</span>
+                                        </button>
+                                    </div>
+                                    <button
+                                        class="bg-gradient-to-tr from-primary to-purple-500 text-white size-12 rounded-2xl flex items-center justify-center shadow-lg shadow-primary/30 hover:scale-105 active:scale-95 transition-transform">
+                                        <span class="material-symbols-outlined fill-1">send</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bottom Quick Stats -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div
+                            class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+                            <div
+                                class="size-12 rounded-lg bg-green-500/10 text-green-500 flex items-center justify-center">
+                                <span class="material-symbols-outlined">savings</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Tasa de Ahorro</p>
+                                <p class="text-xl font-bold">24.5%</p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+                            <div class="size-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined">auto_graph</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Inversión Estimada</p>
+                                <p class="text-xl font-bold">4,120€</p>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+                            <div
+                                class="size-12 rounded-lg bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                                <span class="material-symbols-outlined">warning</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500">Alertas de Gasto</p>
+                                <p class="text-xl font-bold">1 Activa</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

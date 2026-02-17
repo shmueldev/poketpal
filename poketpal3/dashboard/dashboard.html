@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PokePal Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+</head>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#9213ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#0a070c",
+                        "card-dark": "#151118",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-panel {
+            /* background: rgba(21, 17, 24, 0.7); */
+            /* background-color: aqua; */
+            /* backdrop-filter: blur(12px); */
+            /* border: 1px solid rgba(146, 19, 236, 0.1); */
+        }
+
+        .purple-glow {
+            box-shadow: 0 0 20px rgba(146, 19, 236, 0.3);
+        }
+
+        /* body {
+            background: radial-gradient(circle at top right, #1a1022 0%, #0a070c 50%), radial-gradient(circle at bottom left, #150a1d 0%, #0a070c 50%);
+        } */
+    </style>
+
+<body class="bg-zinc-950 text-white overflow-hidden transition-colors duration-300">
+
+  <!-- APP CONTAINER -->
+  <div class="h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header
+      class="h-16 bg-zinc-900 border-b border-zinc-800 flex items-center justify-between px-6 transition-colors duration-300">
+
+      <div class="flex items-center gap-4">
+        <!-- Toggle Button -->
+        <button id="toggleSidebar" class="text-xl md:hidden">
+          ☰
+        </button>
+
+        <div>
+          <h1 id="sectionTitle" class="font-semibold text-lg">
+            Análisis Detallado
+          </h1>
+          <p id="sectionSubtitle" class="text-sm text-zinc-400 transition-colors duration-300">
+            Visualiza tus finanzas en tiempo real
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <button id="themeToggle"
+          class="relative w-14 h-7 rounded-full transition-all duration-500 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+          title="Cambiar tema">
+          <div
+            class="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-purple-700 transition-opacity duration-500">
+          </div>
+          <div id="themeToggleCircle"
+            class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-lg transform transition-all duration-500 ease-out flex items-center justify-center text-sm">
+            <span id="themeIcon">🌙</span>
+          </div>
+        </button>
+
+        <span class="hidden sm:block text-sm">Alex Morgan</span>
+        <div class="w-8 h-8 rounded-full bg-purple-600 transition-all duration-300 hover:scale-110 cursor-pointer">
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN AREA -->
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- OVERLAY (Mobile) -->
+      <div id="overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden">
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside id="sidebar"
+        class="fixed md:relative z-40 h-full w-64 bg-zinc-900 border-r border-zinc-800 transform -translate-x-full md:translate-x-0 transition-all duration-300">
+
+        <div class="p-6 space-y-4">
+
+          <!-- <h2
+            class="text-purple-500 font-bold text-xl mb-6 animate-fade-in hover:scale-105 transition-transform duration-300 cursor-pointer">
+            PokePal
+          </h2> -->
+
+          <nav class="space-y-2">
+
+            <button
+              class="menu-item w-full text-left px-4 py-2 rounded-lg hover:bg-zinc-800 transition-all duration-300 hover:translate-x-1 animate-slide-in"
+              style="animation-delay: 0.3s; opacity: 0;" data-section="historial">
+              📁 Historial
+            </button>
+
+            <button
+              class="menu-item w-full text-left px-4 py-2 rounded-lg hover:bg-zinc-800 transition-all duration-300 hover:translate-x-1 animate-slide-in"
+              style="animation-delay: 0.2s; opacity: 0;" data-section="metas">
+              🎯 Metas
+            </button>
+
+            <button
+              class="menu-item w-full text-left px-4 py-2 rounded-lg hover:bg-zinc-800 transition-all duration-300 hover:translate-x-1 animate-slide-in"
+              style="animation-delay: 0.1s; opacity: 0;" data-section="graficas">
+              📊 Gráficas
+            </button>
+
+            <button
+              class="menu-item w-full text-left px-4 py-2 rounded-lg hover:bg-zinc-800 transition-all duration-300 hover:translate-x-1 animate-slide-in"
+              style="animation-delay: 0.4s; opacity: 0;" data-section="bot">
+              🤖 Bot
+            </button>
+
+          </nav>
+
+          <div class="absolute bottom-6 left-6 right-6 animate-slide-in" style="animation-delay: 0.5s; opacity: 0;">
+            <button
+              class="w-full bg-purple-600 hover:bg-purple-700 py-2 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95">
+              + Nueva Meta
+            </button>
+          </div>
+
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+      <main id="content" class="flex-1 overflow-y-auto p-6 md:ml-0 transition-all duration-300 bg-yellow">
+        <header>
+          <h1 id="sectionTitle" class="font-semibold text-lg bg-white">
+            Análisis Detallado
+          </h1>
+          <p id="sectionSubtitle" class="text-sm text-zinc-400 transition-colors duration-300">
+            Visualiza tus finanzas en tiempo real
+          </p>
+        </header>
+      </main>
+
+    </div>
+  </div>
+</body>
+<!-- <script src="./theme.js"></script> -->
+<script src="./script.js"></script>
+</html>
