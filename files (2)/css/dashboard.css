@@ -1,0 +1,197 @@
+/* ============================================================
+   estilos.css
+   ─────────────────────────────────────────────────────────────
+   Estilos globales de FinanzaBot Dashboard.
+
+   Estrategia de temas:
+     Las CSS variables en :root definen el tema oscuro (default).
+     Añadir la clase .light a <html> activa el tema claro.
+     Un solo toggle de clase cambia TODO simultáneamente →
+     transición perfectamente sincronizada sin lag visual.
+
+   Clases semánticas (.t-*):
+     Permiten que cada elemento reaccione al tema sin
+     necesidad de lógica JS por elemento individual.
+   ============================================================ */
+
+
+/* ── Variables de tema ── */
+:root {
+  --bg-app:      #09090b;    /* zinc-950  */
+  --bg-surface:  #18181b;    /* zinc-900  */
+  --bg-card:     #18181b;
+  --bg-card-alt: #27272a;    /* zinc-800  */
+  --bg-input:    #27272a;
+  --border:      #3f3f46;    /* zinc-700  */
+  --text-primary:#ffffff;
+  --text-muted:  #a1a1aa;    /* zinc-400  */
+  --text-subtle: #71717a;    /* zinc-500  */
+  --divide:      #3f3f46;
+  --transition:  background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+
+:root.light {
+  --bg-app:      #f4f4f5;
+  /* --bg-surface:  #ffffff; */
+  --bg-surface:  #0D0D0D;
+  --bg-card:     #ffffff;
+  --bg-card-alt: #f4f4f5;
+  --bg-input:    #f4f4f5;
+  --border:      #e4e4e7;
+  --text-primary:#18181b;
+  --text-muted:  #71717a;
+  --text-subtle: #a1a1aa;
+  --divide:      #e4e4e7;
+}
+
+
+/* ── Reset y tipografía base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: 'Sora', sans-serif;
+}
+
+body {
+  background: var(--bg-app);
+  color: var(--text-primary);
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+
+/* ── Elementos estructurales con tema ── */
+#sidebar {
+  background: var(--bg-surface);
+  border-color: var(--border);
+  transition: width .3s cubic-bezier(.4, 0, .2, 1), var(--transition);
+}
+
+#main-header {
+  background: var(--bg-surface);
+  border-color: var(--border);
+  transition: var(--transition);
+}
+
+
+/* ── Clases semánticas de tema ── */
+.t-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.t-card-alt {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.t-input {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+.t-text   { color: var(--text-primary); transition: color .25s ease; }
+.t-muted  { color: var(--text-muted);   transition: color .25s ease; }
+.t-subtle { color: var(--text-subtle);  transition: color .25s ease; }
+.t-divide { border-color: var(--border); transition: border-color .25s ease; }
+.t-divider { background: var(--divide); }
+
+
+/* ── Sidebar colapsado (solo desktop) ── */
+#sidebar.collapsed .nav-label         { opacity: 0; width: 0; overflow: hidden; pointer-events: none; }
+#sidebar.collapsed .sidebar-logo      { opacity: 0; width: 0; overflow: hidden; pointer-events: none; }
+#sidebar.collapsed .menu-item-desk    { justify-content: center; }
+#sidebar.collapsed .sidebar-bottom-btn { justify-content: center; }
+
+.nav-label,
+.sidebar-logo {
+  transition: opacity .2s, width .3s;
+  white-space: nowrap;
+}
+
+
+/* ── Sidebar móvil: icono + label debajo ── */
+@media (max-width: 767px) {
+  #sidebar { width: 4.5rem !important; flex-shrink: 0; }
+
+  #sidebar .menu-item-desk {
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 4px;
+  }
+
+  #sidebar .nav-label {
+    opacity: 1 !important;
+    width: auto !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    font-size: 9px;
+    text-align: center;
+  }
+
+  #sidebar .sidebar-logo { display: none; }
+
+  #sidebar .sidebar-bottom-btn {
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 4px;
+  }
+
+  #sidebar .sidebar-bottom-btn .nav-label {
+    font-size: 9px;
+    opacity: 1 !important;
+    width: auto !important;
+  }
+
+  #sidebarToggle { display: none; }
+}
+
+
+/* ── Scrollbar personalizado ── */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #52525b; border-radius: 99px; }
+
+
+/* ── Burbuja del bot ── */
+.bot-bubble {
+  background: linear-gradient(135deg, #1e1230, #2a1842);
+  border: 1px solid rgba(146, 19, 236, .2);
+}
+
+
+/* ── Animaciones de entrada ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+.anim-fade  { animation: fadeUp  .45s ease-out forwards; }
+.anim-slide { animation: slideIn .35s ease-out forwards; }
+
+
+/* ── Ítem activo del menú ── */
+.menu-item.active {
+  background: rgba(146, 19, 236, .15);
+  color: #c084fc;
+}
+
+.menu-item.active .material-symbols-outlined { color: #9213ec; }
+
+
+/* ── Toggle de tema ── */
+#themeToggleCircle {
+  transition: transform .45s cubic-bezier(.4, 0, .2, 1);
+}

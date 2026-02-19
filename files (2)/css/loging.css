@@ -1,0 +1,85 @@
+body {
+    /* font-family: 'sora'; */
+}
+
+.glow-button {
+    box-shadow: 0 0 15px rgba(146, 19, 236, 0.4);
+    transition: box-shadow 0.3s ease;
+}
+
+.glow-button:hover {
+    box-shadow: 0 0 25px rgba(146, 19, 236, 0.6);
+}
+
+.ambient-glow {
+    background: radial-gradient(circle at 50% 50%, rgba(146, 19, 236, 0.15) 0%, rgba(26, 16, 34, 0) 70%);
+}
+
+/* Toggle slider */
+.toggle-bg {
+    background: #322839;
+    border-radius: 9999px;
+    position: relative;
+    transition: background 0.3s;
+}
+
+.toggle-pill {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: #9213ec;
+    border-radius: 9999px;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px rgba(146, 19, 236, 0.5);
+}
+
+.toggle-pill.register {
+    transform: translateX(100%);
+}
+
+.toggle-label {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: color 0.3s;
+    cursor: pointer;
+    padding: 14px 0;
+    user-select: none;
+}
+
+.toggle-label.active {
+    color: #fff;
+}
+
+.toggle-label.inactive {
+    color: #ad9db9;
+}
+
+/* Form transition */
+.form-panel {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-panel.hidden-panel {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(8px);
+}
+
+.form-panel.visible-panel {
+    opacity: 1;
+    pointer-events: auto;
+    position: relative;
+    transform: translateY(0);
+}
+
+.form-wrapper {
+    position: relative;
+    min-height: 320px;
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PoketPall</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#9213ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#1a1022",
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen overflow-x-hidden">
+    <div class="relative flex min-h-screen w-full flex-col">
+        <div class="flex flex-1 flex-row">
+
+            <!-- Left Side: Visual/3D Branding -->
+            <div class="hidden lg:flex flex-1 relative items-center justify-center overflow-hidden bg-[#0d0811]">
+                <div class="absolute inset-0 ambient-glow"></div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div
+                        class="w-80 h-80 rounded-full bg-primary/20 flex items-center justify-center blur-3xl absolute animate-pulse">
+                    </div>
+                    <div
+                        class="relative w-64 h-64 bg-gradient-to-br from-primary to-[#493b54] rounded-3xl rotate-12 flex items-center justify-center shadow-2xl border border-white/10">
+                        <span class="material-symbols-outlined text-[120px] text-white"
+                            style="font-variation-settings: 'FILL' 1">bar_chart</span>
+                    </div>
+                    <div class="mt-12 text-center">
+                        <h1 class="text-4xl font-bold text-white tracking-tight">Domina tus Finanzas</h1>
+                        <p class="text-[#ad9db9] mt-4 text-lg max-w-sm">La educación financiera del futuro, impulsada
+                            por tecnología de vanguardia.</p>
+                    </div>
+                </div>
+                <div class="absolute top-20 left-20 w-32 h-32 bg-primary/10 rounded-full blur-xl"></div>
+                <div class="absolute bottom-40 right-10 w-48 h-48 bg-primary/5 rounded-full blur-2xl"></div>
+            </div>
+
+            <!-- Right Side: Form -->
+            <div
+                class="flex-1 flex flex-col items-center justify-center p-8 bg-background-light dark:bg-background-dark">
+
+                <!-- Logo -->
+                <div class="absolute top-10 left-10 lg:static lg:mb-12 flex items-center gap-2 text-white">
+                    <div class="size-12 text-primary">
+                        <img src="./assets/logoPoketPal.png" alt="">
+                        <!-- <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+                        </svg> -->
+                    </div>
+                    <h2 class="text-white text-2xl font-bold leading-tight tracking-[-0.015em]">PoketPal</h2>
+                </div>
+
+                <!-- Card -->
+                <div
+                    class="w-full max-w-md bg-white dark:bg-[#221c27] p-10 rounded-xl shadow-2xl border border-gray-200 dark:border-[#322839]">
+
+                    <!-- Header -->
+                    <div class="mb-6">
+                        <h3 id="form-title" class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Bienvenido de
+                            nuevo</h3>
+                        <p id="form-subtitle" class="text-gray-500 dark:text-[#ad9db9]">Inicia sesión para acceder a tu
+                            panel educativo.</p>
+                    </div>
+
+                    <!-- Toggle -->
+                    <div class="toggle-bg w-full flex mb-8 p-0 relative" style="height:48px;" id="toggle-container">
+                        <div class="toggle-pill" id="toggle-pill"></div>
+                        <span class="toggle-label active" id="label-login" onclick="switchMode('login')">Iniciar
+                            sesión</span>
+                        <span class="toggle-label inactive" id="label-register"
+                            onclick="switchMode('register')">Registrarse</span>
+                    </div>
+
+                    <!-- Forms wrapper -->
+                    <div class="form-wrapper">
+
+                        <!-- LOGIN FORM -->
+                        <form class="form-panel visible-panel space-y-5" id="login-form">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-white mb-2">Correo
+                                    electrónico</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] text-xl">mail</span>
+                                    <input
+                                        class="w-full bg-gray-50 dark:bg-[#151118] border border-gray-300 dark:border-[#493b54] text-gray-900 dark:text-white rounded-lg pl-10 pr-4 py-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none placeholder:text-gray-400 dark:placeholder:text-[#ad9db9]/50"
+                                        placeholder="ejemplo@fintechedu.com" type="email" />
+                                </div>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 dark:text-white mb-2">Contraseña</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] text-xl">lock</span>
+                                    <input
+                                        class="w-full bg-gray-50 dark:bg-[#151118] border border-gray-300 dark:border-[#493b54] text-gray-900 dark:text-white rounded-lg pl-10 pr-12 py-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none placeholder:text-gray-400 dark:placeholder:text-[#ad9db9]/50"
+                                        placeholder="••••••••" type="password" id="login-password" />
+                                    <button
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] hover:text-primary transition-colors"
+                                        type="button" onclick="togglePass('login-password', this)">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input
+                                        class="rounded border-gray-300 dark:border-[#493b54] text-primary focus:ring-primary bg-transparent"
+                                        type="checkbox" />
+                                    <span class="text-sm text-gray-500 dark:text-[#ad9db9]">Recordarme</span>
+                                </label>
+                                <a class="text-sm font-medium text-primary hover:underline" href="#">¿Olvidaste tu
+                                    contraseña?</a>
+                            </div>
+                            <button
+                                class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg glow-button transition-all flex items-center justify-center gap-2"
+                                type="submit">
+                                <span>Iniciar sesión</span>
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+
+                            <p class="text-center text-sm text-gray-500 dark:text-[#ad9db9]">
+                                ¿No tienes una cuenta? <a href="#" onclick="switchMode('register'); return false;"
+                                    class="text-primary font-bold hover:underline">Regístrate ahora</a>
+                            </p>
+                        </form>
+
+                        <!-- REGISTER FORM -->
+                        <form class="form-panel hidden-panel space-y-5" id="register-form">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-white mb-2">Nombre
+                                    completo</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] text-xl">person</span>
+                                    <input
+                                        class="w-full bg-gray-50 dark:bg-[#151118] border border-gray-300 dark:border-[#493b54] text-gray-900 dark:text-white rounded-lg pl-10 pr-4 py-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none placeholder:text-gray-400 dark:placeholder:text-[#ad9db9]/50"
+                                        placeholder="Tu nombre completo" type="text" />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-white mb-2">Correo
+                                    electrónico</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] text-xl">mail</span>
+                                    <input
+                                        class="w-full bg-gray-50 dark:bg-[#151118] border border-gray-300 dark:border-[#493b54] text-gray-900 dark:text-white rounded-lg pl-10 pr-4 py-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none placeholder:text-gray-400 dark:placeholder:text-[#ad9db9]/50"
+                                        placeholder="ejemplo@fintechedu.com" type="email" />
+                                </div>
+                            </div>
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-gray-700 dark:text-white mb-2">Contraseña</label>
+                                <div class="relative">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] text-xl">lock</span>
+                                    <input
+                                        class="w-full bg-gray-50 dark:bg-[#151118] border border-gray-300 dark:border-[#493b54] text-gray-900 dark:text-white rounded-lg pl-10 pr-12 py-4 focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none placeholder:text-gray-400 dark:placeholder:text-[#ad9db9]/50"
+                                        placeholder="••••••••" type="password" id="register-password" />
+                                    <button
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-[#ad9db9] hover:text-primary transition-colors"
+                                        type="button" onclick="togglePass('register-password', this)">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-lg glow-button transition-all flex items-center justify-center gap-2"
+                                type="submit">
+                                <span>Crear cuenta</span>
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </button>
+
+                            <p class="text-center text-sm text-gray-500 dark:text-[#ad9db9]">
+                                ¿Ya tienes una cuenta? <a href="#" onclick="switchMode('login'); return false;"
+                                    class="text-primary font-bold hover:underline">Inicia sesión</a>
+                            </p>
+                        </form>
+
+                    </div>
+
+                    <!-- Social login -->
+                    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-[#322839]">
+                        <p class="text-center text-xs text-gray-400 dark:text-[#ad9db9]/60 mb-4">O continúa con</p>
+                        <div class="flex items-center justify-center gap-4">
+                            <button
+                                class="p-3 rounded-full border border-gray-200 dark:border-[#493b54] hover:bg-gray-100 dark:hover:bg-[#322839] transition-colors">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <svg class="fill-current text-gray-700 dark:text-white" viewBox="0 0 24 24">
+                                        <path
+                                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                                            fill="#4285F4"></path>
+                                        <path
+                                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                                            fill="#34A853"></path>
+                                        <path
+                                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"
+                                            fill="#FBBC05"></path>
+                                        <path
+                                            d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                                            fill="#EA4335"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <button
+                                class="p-3 rounded-full border border-gray-200 dark:border-[#493b54] hover:bg-gray-100 dark:hover:bg-[#322839] transition-colors">
+                                <span class="material-symbols-outlined text-gray-700 dark:text-white">ios</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-8 text-xs text-gray-400 dark:text-[#ad9db9]/50">© 2024 FintechEdu. Todos los derechos
+                    reservados.</p>
+            </div>
+        </div>
+    </div>
+    <script src="./login.js"></script>
+</body>
+
+</html>
